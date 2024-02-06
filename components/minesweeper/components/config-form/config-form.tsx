@@ -1,6 +1,6 @@
-import { capitalize } from "@/lib/utils";
-import { Difficulty } from "../../types";
-import { IGameContext } from "../../context/types";
+import { capitalize } from '@/lib/utils';
+import { Difficulty } from '../../types';
+import { IGameContext } from '../../context/types';
 import {
   ChangeEvent,
   Dispatch,
@@ -9,10 +9,10 @@ import {
   useEffect,
   useRef,
   useState,
-} from "react";
-import { useToggle } from "@/hooks/useToggle";
-import { HEIGHT, MINES, WIDTH } from "../../constants";
-import { Button } from "@/components/button";
+} from 'react';
+import { useToggle } from '@/hooks/useToggle';
+import { HEIGHT, MINES, WIDTH } from '../../constants';
+import { Button } from '@/components/button';
 
 export const ConfigForm = ({
   configuration,

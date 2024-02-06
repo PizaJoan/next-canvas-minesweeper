@@ -1,4 +1,4 @@
-import Link from "next/link";
+import Link from 'next/link';
 
 // TODO: add is active condition and some styles to make it look cool
 export const Navbar = () => {

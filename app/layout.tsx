@@ -1,13 +1,13 @@
-import type { Metadata } from "next";
-import type { ReactNode } from "react";
+import type { Metadata } from 'next';
+import type { ReactNode } from 'react';
 
-import "./globals.css";
+import './globals.css';
 
-import { Navbar } from "@/components/navbar";
+import { Navbar } from '@/components/navbar';
 
 export const metadata: Metadata = {
   title: "jpizaf's Minesweeper App",
-  description: "Simple minesweeper app with auth and leaderboard",
+  description: 'Simple minesweeper app with auth and leaderboard',
 };
 
 export default function RootLayout({ children }: { children: ReactNode }) {

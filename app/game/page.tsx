@@ -1,4 +1,5 @@
-import { Minesweeper } from "@/components/minesweeper/minesweeper";
+import { LoginUser } from '@/components/login';
+import { Minesweeper } from '@/components/minesweeper/minesweeper';
 
 const Game = () => {
   return (
@@ -6,6 +7,7 @@ const Game = () => {
       <h1 className="text-4xl font-bold">
         Hello and welcome to the Game itself, enjoy!
       </h1>
+      <LoginUser />
       <Minesweeper />
     </section>
   );
