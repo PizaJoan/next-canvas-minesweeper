@@ -21,9 +21,9 @@ import { Cell } from '../../../types';
 import { CELL_MULTIPLIER, CELL_SIZE } from '../../../constants';
 
 export const useMineSweeper = () => {
-  const { width, height, mines, diffculty } = useContext(GameContext);
+  const { cols, rows, mines, difficulty, board } = useContext(GameContext);
 
-  const board = useRef<Cell[][]>([[]]);
+  const boardRef = useRef<Cell[][]>();
   const prevHoveredRef = useRef<[number, number]>([-1, -1]);
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const ctx = useRef<CanvasRenderingContext2D | null>();
@@ -35,20 +35,20 @@ export const useMineSweeper = () => {
   const flagsRef = useRef(flags);
 
   const visitedCellsToWin = useMemo(
-    () => width * height - mines,
-    [width, height, mines],
+    () => cols * rows - mines,
+    [cols, rows, mines],
   );
 
-  const multiplier = useMemo(() => CELL_MULTIPLIER[diffculty], [diffculty]);
+  const multiplier = useMemo(() => CELL_MULTIPLIER[difficulty], [difficulty]);
   const drawCellSize = useMemo(() => CELL_SIZE * multiplier, [multiplier]);
 
   const canvasWidth = useMemo(
-    () => Math.round(CELL_SIZE * width * multiplier),
-    [width, multiplier],
+    () => Math.round(CELL_SIZE * cols * multiplier),
+    [cols, multiplier],
   );
   const canvasHeight = useMemo(
-    () => Math.round(CELL_SIZE * height * multiplier),
-    [height, multiplier],
+    () => Math.round(CELL_SIZE * rows * multiplier),
+    [rows, multiplier],
   );
 
   const handleUpdateVisited = useCallback((...visitedCels: Cell[]) => {
@@ -82,34 +82,34 @@ export const useMineSweeper = () => {
 
       ctx.current = canvas.getContext('2d');
       ctx.current!.font = `${drawCellSize}px bold serif`;
-      board.current = initialize(
+      boardRef.current = initialize(
         ctx.current,
-        mines,
+        board,
         drawCellSize,
-        width,
-        height,
+        cols,
+        rows,
       );
 
       const handleOnHover = handleOnHoverCurrying(
-        board.current,
+        boardRef.current,
         ctx.current,
         drawCellSize,
         prevHoveredRef,
       );
       const handleOnMouseOut = handleOnMouseOutCurrying(
-        board.current,
+        boardRef.current,
         ctx.current,
         drawCellSize,
         prevHoveredRef,
       );
       const handleClick = handleOnClickCurrying(
-        board.current,
+        boardRef.current,
         ctx.current,
         drawCellSize,
         handleUpdateVisited,
       );
       const handleOnContextMenu = handleOnContextMenuCurrying(
-        board.current,
+        boardRef.current,
         ctx.current,
         drawCellSize,
         flagsRef,
@@ -135,8 +135,9 @@ export const useMineSweeper = () => {
     lost,
     mines,
     drawCellSize,
-    width,
-    height,
+    cols,
+    rows,
+    board,
     useFlag,
     handleUpdateVisited,
   ]);
@@ -155,7 +156,7 @@ export const useMineSweeper = () => {
   // Force reset game when updates the context/changes difficulty
   useEffect(() => {
     handleReset();
-  }, [width, height, handleReset]);
+  }, [cols, rows, handleReset]);
 
   return {
     canvasRef,

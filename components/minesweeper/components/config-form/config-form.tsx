@@ -1,5 +1,5 @@
 import { capitalize } from '@/lib/utils';
-import { Difficulty } from '../../types';
+import { Cell, Difficulty } from '../../types';
 import { IGameContext } from '../../context/types';
 import {
   ChangeEvent,
@@ -26,12 +26,12 @@ export const ConfigForm = ({
   toggleGameEnabled: () => void;
 }) => {
   const [difficulty, setDifficulty] = useState<Difficulty>(
-    configuration.diffculty,
+    configuration.difficulty,
   );
   const [isCustomMode, toggleCustomMode] = useToggle();
 
-  const widthRef = useRef<HTMLInputElement>(null);
-  const heightRef = useRef<HTMLInputElement>(null);
+  const rowsRef = useRef<HTMLInputElement>(null);
+  const colsRef = useRef<HTMLInputElement>(null);
 
   const handleChangeMode = (e: ChangeEvent<HTMLSelectElement>) => {
     const value = e.target.value as Difficulty;
@@ -50,25 +50,39 @@ export const ConfigForm = ({
     };
 
     if (isCustomMode) {
-      selectedConfig.width = +widthRef.current!.value;
-      selectedConfig.height = +heightRef.current!.value;
-      selectedConfig.mines = Math.round(
-        (selectedConfig.width * selectedConfig.height) / 5,
-      );
+      selectedConfig.rows = +rowsRef.current!.value;
+      selectedConfig.cols = +colsRef.current!.value;
     }
 
-    updateConfiguration(selectedConfig);
+    fetch('/api/game/init', {
+      method: 'POST',
+      headers: {
+        'content-type': 'application/json',
+      },
+      body: JSON.stringify(selectedConfig),
+    })
+      .then((res) => res.json())
+      .then(({ board }) => {
+        updateConfiguration({
+          rows: board.rows,
+          cols: board.cols,
+          board: board.jsonBoard.map((row: number[]) =>
+            row.map((col) => ({ num: col })),
+          ),
+          difficulty: board.difficulty,
+          mines: board.mines,
+        });
 
-    if (!isGameEnabled) toggleGameEnabled();
+        if (!isGameEnabled) toggleGameEnabled();
+      });
   };
 
   useEffect(() => {
     updateConfiguration((prevConfiguration) => ({
       ...prevConfiguration,
-      diffculty: difficulty,
-      mines: MINES[difficulty],
-      width: WIDTH[difficulty],
-      height: HEIGHT[difficulty],
+      difficulty: difficulty,
+      rows: HEIGHT[difficulty],
+      cols: WIDTH[difficulty],
     }));
   }, [difficulty, updateConfiguration]);
 
@@ -100,7 +114,7 @@ export const ConfigForm = ({
               Number of columns
             </label>
             <input
-              ref={widthRef}
+              ref={colsRef}
               className="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-gray-900 focus:border-blue-500 focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400 dark:focus:border-blue-500 dark:focus:ring-blue-500"
               defaultValue={WIDTH[Difficulty.custom]}
               type="number"
@@ -113,7 +127,7 @@ export const ConfigForm = ({
               Number of rows
             </label>
             <input
-              ref={heightRef}
+              ref={rowsRef}
               className="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-gray-900 focus:border-blue-500 focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400 dark:focus:border-blue-500 dark:focus:ring-blue-500"
               defaultValue={HEIGHT[Difficulty.custom]}
               type="number"

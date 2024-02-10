@@ -1,8 +1,9 @@
-import type { Difficulty } from '../types';
+import type { Cell, Difficulty } from '../types';
 
 export interface IGameContext {
-  diffculty: Difficulty;
-  width: number;
-  height: number;
+  difficulty: Difficulty;
+  rows: number;
+  cols: number;
   mines: number;
+  board: Cell[][];
 }

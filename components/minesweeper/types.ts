@@ -1,8 +1,8 @@
 export enum Difficulty {
-  easy = 'EASY',
-  medium = 'MEDIUM',
-  hard = 'HARD',
-  custom = 'CUSTOM',
+  easy = 'easy',
+  medium = 'medium',
+  hard = 'hard',
+  custom = 'custom',
 }
 
 export enum CellColor {

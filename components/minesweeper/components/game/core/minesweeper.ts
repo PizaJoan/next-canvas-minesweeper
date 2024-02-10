@@ -16,45 +16,11 @@ const getCellColor = (num: number): string => {
 
 export const initialize = (
   ctx: CanvasRenderingContext2D | null,
-  mines: number,
+  board: Cell[][],
   cellSize: number,
   cols: number,
   rows: number,
 ) => {
-  const board = Array(rows)
-    .fill(null)
-    .map(() =>
-      Array(cols)
-        .fill(null)
-        .map(() => ({
-          num: 0,
-          color: CellColor.even,
-        })),
-    );
-
-  let counter = 0;
-
-  while (counter < mines) {
-    const firstNum = Math.floor(Math.random() * rows);
-    const secondNum = Math.floor(Math.random() * cols);
-
-    if (!isNaN(board[firstNum][secondNum].num)) {
-      board[firstNum][secondNum].num = NaN;
-
-      for (let i = 0; i < BOMB_PROXIMITY.length; i++) {
-        const [row, col] = BOMB_PROXIMITY[i];
-
-        const cell = board[firstNum + row]?.[secondNum + col];
-
-        if (cell && !isNaN(cell.num)) {
-          cell.num++;
-        }
-      }
-
-      counter++;
-    }
-  }
-
   ctx!.fillStyle = CellColor.even;
   ctx?.fillRect(0, 0, cols * cellSize, rows * cellSize);
 
