@@ -6,6 +6,7 @@ import {
   Dispatch,
   FormEvent,
   SetStateAction,
+  useCallback,
   useEffect,
   useRef,
   useState,
@@ -29,23 +30,14 @@ export const ConfigForm = ({
     configuration.difficulty,
   );
   const [isCustomMode, toggleCustomMode] = useToggle();
+  const isGameEnabledRef = useRef(isGameEnabled);
+  const toggleGameEnabledRef = useRef(toggleGameEnabled);
 
   const rowsRef = useRef<HTMLInputElement>(null);
   const colsRef = useRef<HTMLInputElement>(null);
 
-  const handleChangeMode = (e: ChangeEvent<HTMLSelectElement>) => {
-    const value = e.target.value as Difficulty;
-
-    if (isCustomMode || value === Difficulty.custom) toggleCustomMode();
-
-    setDifficulty(value);
-  };
-
-  const handleSubmitConfiguration = (e: FormEvent) => {
-    e.preventDefault();
-
-    const selectedConfig = {
-      ...configuration,
+  const handleUpdateConfig = useCallback(() => {
+    const selectedConfig: Partial<IGameContext> = {
       difficulty: difficulty,
     };
 
@@ -73,18 +65,30 @@ export const ConfigForm = ({
           mines: board.mines,
         });
 
-        if (!isGameEnabled) toggleGameEnabled();
+        if (!isGameEnabledRef.current) {
+          toggleGameEnabledRef.current();
+          isGameEnabledRef.current = true;
+        }
       });
+  }, [difficulty, isCustomMode, updateConfiguration]);
+
+  const handleSubmitConfiguration = (e: FormEvent) => {
+    e.preventDefault();
+
+    handleUpdateConfig();
+  };
+
+  const handleChangeMode = (e: ChangeEvent<HTMLSelectElement>) => {
+    const value = e.target.value as Difficulty;
+
+    if (isCustomMode || value === Difficulty.custom) toggleCustomMode();
+
+    setDifficulty(value);
   };
 
   useEffect(() => {
-    updateConfiguration((prevConfiguration) => ({
-      ...prevConfiguration,
-      difficulty: difficulty,
-      rows: HEIGHT[difficulty],
-      cols: WIDTH[difficulty],
-    }));
-  }, [difficulty, updateConfiguration]);
+    if (isGameEnabledRef.current) handleUpdateConfig();
+  }, [difficulty, handleUpdateConfig]);
 
   return (
     <form
