@@ -14,6 +14,7 @@ import {
 import { useToggle } from '@/hooks/useToggle';
 import { HEIGHT, MINES, WIDTH } from '../../constants';
 import { Button } from '@/components/button';
+import { mapBoard } from '../game/core/minesweeper';
 
 export const ConfigForm = ({
   configuration,
@@ -58,9 +59,7 @@ export const ConfigForm = ({
         updateConfiguration({
           rows: board.rows,
           cols: board.cols,
-          board: board.jsonBoard.map((row: number[]) =>
-            row.map((col) => ({ num: col })),
-          ),
+          board: mapBoard(board.jsonBoard),
           difficulty: board.difficulty,
           mines: board.mines,
         });

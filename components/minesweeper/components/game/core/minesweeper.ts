@@ -1,6 +1,5 @@
 import { MutableRefObject, RefObject } from 'react';
 import { Cell, CellColor } from '../../../types';
-import { BOMB_PROXIMITY } from '../../../constants';
 import { checkBombProximity, getRowAndCol } from '../lib/helpers';
 
 const getCellColor = (num: number): string => {
@@ -13,6 +12,9 @@ const getCellColor = (num: number): string => {
       return '#e11d48';
   }
 };
+
+export const mapBoard = (board: number[][]): Cell[][] =>
+  board.map((row) => row.map((num) => ({ num, color: CellColor.even })));
 
 export const initialize = (
   ctx: CanvasRenderingContext2D | null,
@@ -55,7 +57,7 @@ export const handleOnHoverCurrying =
       ev.target! as HTMLCanvasElement
     ).getBoundingClientRect();
 
-    const [hoverColIndex, hoverRowIndex] = getRowAndCol(
+    const [hoverRowIndex, hoverColIndex] = getRowAndCol(
       board.length,
       board[0].length,
       cellSize,
@@ -137,7 +139,7 @@ export const handleOnClickCurrying =
       ev.target! as HTMLCanvasElement
     ).getBoundingClientRect();
 
-    const [clickCol, clickRow] = getRowAndCol(
+    const [clickRow, clickCol] = getRowAndCol(
       board.length,
       board[0].length,
       cellSize,
@@ -224,7 +226,7 @@ export const handleOnContextMenuCurrying =
       ev.target! as HTMLCanvasElement
     ).getBoundingClientRect();
 
-    const [clickCol, clickRow] = getRowAndCol(
+    const [clickRow, clickCol] = getRowAndCol(
       board.length,
       board[0].length,
       cellSize,
