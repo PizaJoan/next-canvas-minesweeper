@@ -147,7 +147,7 @@ export const useMineSweeper = () => {
   }, [flags]);
 
   useEffect(() => {
-    const foundBomb = visited.find((cell) => isNaN(cell.num));
+    const foundBomb = visited.find((cell) => cell.num === -1);
     if (foundBomb) return lose();
 
     if (visitedCellsToWin === visited.length) return win();
