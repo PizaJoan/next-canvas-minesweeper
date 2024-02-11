@@ -18,7 +18,7 @@ import {
 } from '../core/minesweeper';
 
 import { Cell } from '../../../types';
-import { CELL_MULTIPLIER, CELL_SIZE } from '../../../constants';
+import { BOMB, CELL_MULTIPLIER, CELL_SIZE } from '../../../constants';
 
 export const useMineSweeper = () => {
   const { cols, rows, mines, difficulty, board } = useContext(GameContext);
@@ -147,7 +147,7 @@ export const useMineSweeper = () => {
   }, [flags]);
 
   useEffect(() => {
-    const foundBomb = visited.find((cell) => cell.num === -1);
+    const foundBomb = visited.find((cell) => cell.num === BOMB);
     if (foundBomb) return lose();
 
     if (visitedCellsToWin === visited.length) return win();

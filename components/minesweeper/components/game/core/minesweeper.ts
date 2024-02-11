@@ -1,4 +1,7 @@
 import { MutableRefObject, RefObject } from 'react';
+
+import { BOMB } from '@/components/minesweeper/constants';
+
 import { Cell, CellColor } from '../../../types';
 import { checkBombProximity, getRowAndCol } from '../lib/helpers';
 
@@ -155,7 +158,7 @@ export const handleOnClickCurrying =
       ctx!.fillStyle = getCellColor(cell.num);
 
       // BOMB
-      if (isNaN(cell.num)) {
+      if (cell.num === BOMB) {
         ctx?.beginPath();
         ctx?.arc(
           clickCol * cellSize + cellSize / 2,

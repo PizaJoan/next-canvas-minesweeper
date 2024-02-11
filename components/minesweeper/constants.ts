@@ -47,3 +47,5 @@ export const HEIGHT: Record<Difficulty, number> = {
   [Difficulty.hard]: 16,
   [Difficulty.custom]: 40,
 };
+
+export const BOMB = -1;
