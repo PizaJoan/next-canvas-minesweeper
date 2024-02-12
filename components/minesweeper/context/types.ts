@@ -6,4 +6,5 @@ export interface IGameContext {
   cols: number;
   mines: number;
   board: Cell[][];
+  reset?: (config?: Partial<IGameContext>) => Promise<void>;
 }

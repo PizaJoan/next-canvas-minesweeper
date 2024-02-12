@@ -23,7 +23,7 @@ export const ConfigForm = ({
   toggleGameEnabled,
 }: {
   configuration: IGameContext;
-  updateConfiguration: Dispatch<SetStateAction<IGameContext>>;
+  updateConfiguration: IGameContext['reset'];
   isGameEnabled: boolean;
   toggleGameEnabled: () => void;
 }) => {
@@ -43,32 +43,17 @@ export const ConfigForm = ({
     };
 
     if (isCustomMode) {
+      selectedConfig.difficulty = Difficulty.custom;
       selectedConfig.rows = +rowsRef.current!.value;
       selectedConfig.cols = +colsRef.current!.value;
     }
 
-    fetch('/api/game/init', {
-      method: 'POST',
-      headers: {
-        'content-type': 'application/json',
-      },
-      body: JSON.stringify(selectedConfig),
-    })
-      .then((res) => res.json())
-      .then(({ board }) => {
-        updateConfiguration({
-          rows: board.rows,
-          cols: board.cols,
-          board: mapBoard(board.jsonBoard),
-          difficulty: board.difficulty,
-          mines: board.mines,
-        });
-
-        if (!isGameEnabledRef.current) {
-          toggleGameEnabledRef.current();
-          isGameEnabledRef.current = true;
-        }
-      });
+    updateConfiguration?.(selectedConfig).then(() => {
+      if (!isGameEnabledRef.current) {
+        toggleGameEnabledRef.current();
+        isGameEnabledRef.current = true;
+      }
+    });
   }, [difficulty, isCustomMode, updateConfiguration]);
 
   const handleSubmitConfiguration = (e: FormEvent) => {
@@ -81,8 +66,7 @@ export const ConfigForm = ({
     const value = e.target.value as Difficulty;
 
     if (isCustomMode || value === Difficulty.custom) toggleCustomMode();
-
-    setDifficulty(value);
+    else setDifficulty(value);
   };
 
   useEffect(() => {

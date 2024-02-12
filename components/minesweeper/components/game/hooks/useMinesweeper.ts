@@ -21,7 +21,8 @@ import { Cell } from '../../../types';
 import { BOMB, CELL_MULTIPLIER, CELL_SIZE } from '../../../constants';
 
 export const useMineSweeper = () => {
-  const { cols, rows, mines, difficulty, board } = useContext(GameContext);
+  const { cols, rows, mines, difficulty, board, reset } =
+    useContext(GameContext);
 
   const boardRef = useRef<Cell[][]>();
   const prevHoveredRef = useRef<[number, number]>([-1, -1]);
@@ -71,6 +72,11 @@ export const useMineSweeper = () => {
     setWon(false);
     setLost(false);
   }, []);
+
+  const handleClickReset = useCallback(() => {
+    handleReset();
+    reset?.({ rows, cols, difficulty });
+  }, [handleReset, reset, rows, cols, difficulty]);
 
   useEffect(() => {
     if (canvasRef.current && !(won || lost)) {
@@ -156,7 +162,7 @@ export const useMineSweeper = () => {
   // Force reset game when updates the context/changes difficulty
   useEffect(() => {
     handleReset();
-  }, [cols, rows, handleReset]);
+  }, [board, handleReset]);
 
   return {
     canvasRef,
@@ -165,6 +171,6 @@ export const useMineSweeper = () => {
     remainingFlags: flags,
     won,
     lost,
-    reset: handleReset,
+    reset: handleClickReset,
   };
 };
