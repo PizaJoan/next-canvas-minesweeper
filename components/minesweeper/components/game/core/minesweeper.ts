@@ -158,7 +158,9 @@ export const handleOnClickCurrying =
     if (!cell.revealed && !cell.isFlag) {
       ctx!.fillStyle = getCellColor(cell.num);
 
+      // Send history to the server
       playGame({ row: clickRow, col: clickCol });
+
       // BOMB
       if (cell.num === BOMB) {
         ctx?.beginPath();
