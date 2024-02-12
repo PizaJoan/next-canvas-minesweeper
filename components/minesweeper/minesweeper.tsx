@@ -9,29 +9,22 @@ import { Game } from './components/game/game';
 import { ConfigForm } from './components/config-form/config-form';
 import { IGameContext } from './context/types';
 import { mapBoard } from './components/game/core/minesweeper';
+import { initGame } from './components/game/lib/requests';
 
 export const Minesweeper = () => {
   const [configuration, setConfiguration] = useState(initialGameContext);
   const [isGameEnabled, toggleGameEnabled] = useToggle();
 
   const updateConfiguration = useRef((gameContext?: Partial<IGameContext>) =>
-    fetch('/api/game/init', {
-      method: 'POST',
-      headers: {
-        'content-type': 'application/json',
-      },
-      body: JSON.stringify(gameContext ? gameContext : configuration),
-    })
-      .then((res) => res.json())
-      .then(({ board }) => {
-        setConfiguration({
-          rows: board.rows,
-          cols: board.cols,
-          board: mapBoard(board.jsonBoard),
-          difficulty: board.difficulty,
-          mines: board.mines,
-        });
-      }),
+    initGame(gameContext ? gameContext : configuration).then(({ board }) => {
+      setConfiguration({
+        rows: board.rows,
+        cols: board.cols,
+        board: mapBoard(board.jsonBoard),
+        difficulty: board.difficulty,
+        mines: board.mines,
+      });
+    }),
   );
 
   return (

@@ -1,10 +1,11 @@
 'use client';
 
 import { useEffect } from 'react';
+import { initUser } from './minesweeper/components/game/lib/requests';
 
 export const LoginUser = () => {
   useEffect(() => {
-    fetch('/api/user/init');
+    initUser();
   }, []);
 
   return <></>;
