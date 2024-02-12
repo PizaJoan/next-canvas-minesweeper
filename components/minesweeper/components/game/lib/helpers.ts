@@ -12,7 +12,7 @@ export const checkBombProximity = (
   for (let tries = 0; tries < validIndexes.length; tries++) {
     const [actualRow, actualCol] = validIndexes[tries]
       .split(INDEX_SEPARATOR)
-      .map((_) => +_);
+      .map(Number);
 
     for (let i = 0; i < BOMB_PROXIMITY.length; i++) {
       const [proximityRow, proximityCol] = BOMB_PROXIMITY[i];
@@ -40,7 +40,7 @@ export const checkBombProximity = (
 
   return validIndexes
     .concat(invalidIndexes)
-    .map((_) => _.split(INDEX_SEPARATOR).map((__) => +__));
+    .map((_) => _.split(INDEX_SEPARATOR).map(Number));
 };
 
 export const getRowAndCol = (
