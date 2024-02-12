@@ -12,3 +12,6 @@ export const initUser = () => fetch('/api/user/init');
 
 export const initGame = (body: Partial<IGameContext>) =>
   POST('/api/game/init', body);
+
+export const playGame = (body: { row: number; col: number }) =>
+  POST('/api/game/play', body);

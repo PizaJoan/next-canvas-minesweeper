@@ -4,6 +4,7 @@ import { BOMB } from '@/components/minesweeper/constants';
 
 import { Cell, CellColor } from '../../../types';
 import { checkBombProximity, getRowAndCol } from '../lib/helpers';
+import { playGame } from '../lib/requests';
 
 const getCellColor = (num: number): string => {
   switch (num) {
@@ -157,6 +158,7 @@ export const handleOnClickCurrying =
     if (!cell.revealed && !cell.isFlag) {
       ctx!.fillStyle = getCellColor(cell.num);
 
+      playGame({ row: clickRow, col: clickCol });
       // BOMB
       if (cell.num === BOMB) {
         ctx?.beginPath();
