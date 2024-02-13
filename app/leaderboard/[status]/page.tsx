@@ -30,39 +30,36 @@ export default async function Leaderboard({
       <article className="flex w-full justify-center">
         {(games.length > 0 && (
           <ul className="w-1/2 space-y-5">
-            {games.map((game, index) => {
-              console.log(game);
-              return (
-                <li
-                  className="flex justify-between rounded-xl border border-gray-500 bg-gray-900 px-5 py-3 text-center hover:border-gray-300 hover:bg-gray-700"
-                  key={game.id}
-                >
-                  <span className="flex flex-col justify-between gap-2 text-start">
-                    <span>
-                      {index + 1 + (!!page && page > 1 ? page * 20 : 0)}
-                      {'. '}
-                      {game.user.name ?? 'Unknown'}
+            {games.map((game, index) => (
+              <li
+                className="flex justify-between rounded-xl border border-gray-500 bg-gray-900 px-5 py-3 text-center hover:border-gray-300 hover:bg-gray-700"
+                key={game.id}
+              >
+                <span className="flex flex-col justify-between gap-2 text-start">
+                  <span>
+                    {index + 1 + (!!page && page > 1 ? page * 20 : 0)}
+                    {'. '}
+                    {game.user.name ?? 'Unknown'}
+                  </span>
+                  <div className="flex justify-around gap-5">
+                    <span
+                      className={twMerge(
+                        'flex self-center text-sm font-semibold capitalize',
+                        difficultyColorMap[game.board.difficulty],
+                      )}
+                    >
+                      {game.board.difficulty}
                     </span>
-                    <div className="flex justify-around gap-5">
-                      <span
-                        className={twMerge(
-                          'flex self-center text-sm font-semibold capitalize',
-                          difficultyColorMap[game.board.difficulty],
-                        )}
-                      >
-                        {game.board.difficulty}
-                      </span>
-                      <span className="flex self-center text-sm font-normal">
-                        {game.time} s
-                      </span>
-                    </div>
-                  </span>
-                  <span className="flex self-center text-right">
-                    {game.score} pts
-                  </span>
-                </li>
-              );
-            })}
+                    <span className="flex self-center text-sm font-normal">
+                      {game.time} s
+                    </span>
+                  </div>
+                </span>
+                <span className="flex self-center text-right">
+                  {game.score} pts
+                </span>
+              </li>
+            ))}
           </ul>
         )) || (
           <span className="text-base font-semibold">
