@@ -28,7 +28,7 @@ export default async function Leaderboard({
   return (
     <>
       <article className="flex w-full justify-center">
-        {(games.length > 0 && (
+        {games.length > 0 ? (
           <ul className="w-1/2 space-y-5">
             {games.map((game, index) => (
               <li
@@ -61,7 +61,7 @@ export default async function Leaderboard({
               </li>
             ))}
           </ul>
-        )) || (
+        ) : (
           <span className="text-base font-semibold">
             There are no results... Try different status
           </span>
