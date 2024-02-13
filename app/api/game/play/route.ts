@@ -7,7 +7,7 @@ export async function POST(request: Request) {
 
   const body = await request.json();
 
-  const status = await fetch('http://localhost:3001/game/play', {
+  const status = await fetch(`${process.env.API_URL}/game/play`, {
     method: 'POST',
     headers: {
       'content-type': 'application/json',

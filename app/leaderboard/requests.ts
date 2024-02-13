@@ -5,7 +5,7 @@ export const getGames = (
   page?: number,
   order: ValidOrder = ValidOrder.desc,
 ): Promise<GameLeaderboard[]> => {
-  const url = new URL('http://localhost:3001/game/leaderboard');
+  const url = new URL(`${process.env.API_URL}/game/leaderboard`);
 
   url.searchParams.append('status', status);
   url.searchParams.append('order', order);

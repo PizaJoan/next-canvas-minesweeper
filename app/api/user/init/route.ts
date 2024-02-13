@@ -4,7 +4,7 @@ export async function GET() {
   const user = cookies().has('user');
 
   if (!user) {
-    const response = await fetch('http://localhost:3001/user/init');
+    const response = await fetch(`${process.env.API_URL}/user/init`);
 
     cookies().set('user', await response.text());
   }
