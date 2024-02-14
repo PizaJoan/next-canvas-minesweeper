@@ -1,5 +1,4 @@
 import { IGameContext } from '@/components/minesweeper/context/types';
-import { Cell } from '@/components/minesweeper/types';
 
 const POST = (url: string, body: any) =>
   fetch(url, {
