@@ -12,7 +12,9 @@ export async function GET(request: Request) {
   if (alreadyUser) reqURL.searchParams.append('userId', alreadyUser);
 
   const response = await fetch(reqURL);
-  cookies().set('username', await response.text());
+  const body = await response.json();
+
+  cookies().set('username', body.name);
 
   return redirect('/');
 }

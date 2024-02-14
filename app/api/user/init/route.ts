@@ -6,7 +6,10 @@ export async function GET() {
   if (!user) {
     const response = await fetch(`${process.env.API_URL}/user/init`);
 
-    cookies().set('userId', await response.text());
+    const body = await response.json();
+
+    cookies().set('userId', body.id);
+    cookies().set('username', body.name);
   }
 
   return Response.json({ message: 'loggedIn' });

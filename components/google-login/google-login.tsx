@@ -13,7 +13,7 @@ export const GoogleLogin = () => {
     <>
       <div
         id="g_id_onload"
-        data-client_id="946563726380-g54a3b0kcl8c0npml3k2i4ig1qli4ufs.apps.googleusercontent.com"
+        data-client_id={process.env.NEXT_PUBLIC_GOAUTH}
         data-context="signup"
         data-ux_mode="popup"
         data-callback="signIn"
