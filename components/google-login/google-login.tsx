@@ -5,16 +5,8 @@ import { useEffect, useRef } from 'react';
 import { useRouter } from 'next/navigation';
 
 export const GoogleLogin = () => {
-  const router = useRouter();
   const scriptContainerRef = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    window.signIn = function ({ credential }) {
-      fetch(`/api/user/google?token=${credential}`).then(() =>
-        router.refresh(),
-      );
-    };
-  }, [router]);
+  const router = useRouter();
 
   useEffect(() => {
     const script = document.createElement('script');
@@ -28,6 +20,14 @@ export const GoogleLogin = () => {
       containerRef?.removeChild(script);
     };
   }, []);
+
+  useEffect(() => {
+    window.signIn = function ({ credential }) {
+      fetch(`/api/user/google?token=${credential}`).then(() =>
+        router.refresh(),
+      );
+    };
+  }, [router]);
 
   return (
     <>
