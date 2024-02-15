@@ -12,11 +12,14 @@ export const User = ({ username }: { username: string }) => {
   };
 
   return (
-    <div>
+    <div className="flex flex-row items-center gap-5">
       <p>
-        Hello, <span className="font-semibold italic">{username}</span>
+        Hello,{' '}
+        <span className="bg-red-40 font-semibold italic">{username}</span>
       </p>
-      <Button onClick={handleLogout}>Logout</Button>
+      <Button onClick={handleLogout} customClassNames="px-3 py-2 m-0">
+        Logout
+      </Button>
     </div>
   );
 };

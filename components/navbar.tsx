@@ -12,9 +12,11 @@ export const Navbar = () => {
   const username = cookies().get('username')?.value;
 
   return (
-    <header className="flex flex-row justify-center gap-5 pt-10">
-      <Link href="/">Game</Link>
-      <Link href="/leaderboard">Leaderboard</Link>
+    <header className="justify-content-center grid grid-cols-3 gap-5 pt-10">
+      <div className="col-start-2 flex flex-row items-center justify-center gap-5">
+        <Link href="/">Game</Link>
+        <Link href="/leaderboard">Leaderboard</Link>
+      </div>
       {username ? <User username={username} /> : <GoogleLogin />}
     </header>
   );
