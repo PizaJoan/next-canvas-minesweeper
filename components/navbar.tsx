@@ -16,14 +16,7 @@ export const Navbar = () => {
       <Link href="/">Home</Link>
       <Link href="/game">Game</Link>
       <Link href="/leaderboard">Leaderboard</Link>
-      {username ? (
-        <User username={username} />
-      ) : (
-        <>
-          <Script src="https://accounts.google.com/gsi/client" />
-          <GoogleLogin />
-        </>
-      )}
+      {username ? <User username={username} /> : <GoogleLogin />}
     </header>
   );
 };

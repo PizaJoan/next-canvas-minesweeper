@@ -1,16 +1,37 @@
 'use client';
 
-import { useEffect } from 'react';
+import { useEffect, useRef } from 'react';
+
+import { useRouter } from 'next/navigation';
 
 export const GoogleLogin = () => {
+  const router = useRouter();
+  const scriptContainerRef = useRef<HTMLDivElement>(null);
+
   useEffect(() => {
     window.signIn = function ({ credential }) {
-      fetch(`/api/user/google?token=${credential}`);
+      fetch(`/api/user/google?token=${credential}`).then(() =>
+        router.refresh(),
+      );
+    };
+  }, [router]);
+
+  useEffect(() => {
+    const script = document.createElement('script');
+    script.src = 'https://accounts.google.com/gsi/client';
+
+    // Ref to the container take profit on the closure
+    const containerRef = scriptContainerRef.current;
+    containerRef?.appendChild(script);
+
+    return () => {
+      containerRef?.removeChild(script);
     };
   }, []);
 
   return (
     <>
+      <div ref={scriptContainerRef} />
       <div
         id="g_id_onload"
         data-client_id={process.env.NEXT_PUBLIC_GOAUTH}
