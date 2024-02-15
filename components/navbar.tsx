@@ -13,8 +13,7 @@ export const Navbar = () => {
 
   return (
     <header className="flex flex-row justify-center gap-5 pt-10">
-      <Link href="/">Home</Link>
-      <Link href="/game">Game</Link>
+      <Link href="/">Game</Link>
       <Link href="/leaderboard">Leaderboard</Link>
       {username ? <User username={username} /> : <GoogleLogin />}
     </header>
