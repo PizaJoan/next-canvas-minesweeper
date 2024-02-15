@@ -4,6 +4,8 @@ import type { ReactNode } from 'react';
 import './globals.css';
 
 import { Navbar } from '@/components/navbar';
+import { USERNAME } from '@/constants/cookies-keys';
+import { cookies } from 'next/headers';
 
 export const metadata: Metadata = {
   title: "jpizaf's Minesweeper App",
@@ -11,10 +13,12 @@ export const metadata: Metadata = {
 };
 
 export default function RootLayout({ children }: { children: ReactNode }) {
+  const username = cookies().get(USERNAME)?.value;
+
   return (
     <html lang="es">
       <body>
-        <Navbar />
+        <Navbar username={username} />
         <main className="min-h-screen px-24 py-16">{children}</main>
       </body>
     </html>

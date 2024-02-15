@@ -30,7 +30,7 @@ export const GoogleLogin = () => {
   }, [router]);
 
   return (
-    <>
+    <div>
       <div ref={scriptContainerRef} />
       <div
         id="g_id_onload"
@@ -50,6 +50,6 @@ export const GoogleLogin = () => {
         data-locale="en-GB"
         data-logo_alignment="left"
       ></div>
-    </>
+    </div>
   );
 };
