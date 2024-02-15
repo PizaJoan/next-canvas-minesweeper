@@ -1,7 +1,9 @@
 import { cookies } from 'next/headers';
 
+import { GAME, USER_ID } from '@/constants/cookies-keys';
+
 export async function POST(request: Request) {
-  const user = cookies().get('user');
+  const user = cookies().get(USER_ID);
 
   const body = await request.json();
 
@@ -18,7 +20,7 @@ export async function POST(request: Request) {
 
   const res = await gameConfig.json();
 
-  cookies().set('game', res.game.id);
+  cookies().set(GAME, res.game.id);
 
   return Response.json(res);
 }
