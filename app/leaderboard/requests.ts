@@ -12,5 +12,5 @@ export const getGames = (
 
   if (page) url.searchParams.append('page', String(page));
 
-  return fetch(url).then((res) => res.json());
+  return fetch(url, { cache: 'no-store' }).then((res) => res.json());
 };

@@ -4,6 +4,7 @@ import Link from 'next/link';
 import Script from 'next/script';
 import { cookies } from 'next/headers';
 
+import { User } from './user';
 import { GoogleLogin } from './google-login/google-login';
 
 // TODO: add is active condition and some styles to make it look cool
@@ -16,11 +17,7 @@ export const Navbar = () => {
       <Link href="/game">Game</Link>
       <Link href="/leaderboard">Leaderboard</Link>
       {username ? (
-        <div className="self-end">
-          <p>
-            Hello, <span className="font-semibold italic">{username}</span>
-          </p>
-        </div>
+        <User username={username} />
       ) : (
         <>
           <Script src="https://accounts.google.com/gsi/client" />
