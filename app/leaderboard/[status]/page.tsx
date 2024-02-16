@@ -2,10 +2,10 @@ import Link from 'next/link';
 import { twMerge } from 'tailwind-merge';
 
 import { Button } from '@/components/button';
+import { Difficulty } from '@/components/minesweeper/types';
 
 import { getGames } from '../requests';
 import { ValidOrder, ValidStatus } from '../types';
-import { Difficulty } from '@/components/minesweeper/types';
 
 const difficultyColorMap = {
   [Difficulty.easy]: 'text-green-500',

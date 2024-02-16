@@ -1,20 +1,19 @@
-import { capitalize } from '@/lib/utils';
-import { Cell, Difficulty } from '../../types';
-import { IGameContext } from '../../context/types';
 import {
   ChangeEvent,
-  Dispatch,
   FormEvent,
-  SetStateAction,
   useCallback,
   useEffect,
   useRef,
   useState,
 } from 'react';
-import { useToggle } from '@/hooks/useToggle';
-import { HEIGHT, MINES, WIDTH } from '../../constants';
+
 import { Button } from '@/components/button';
-import { mapBoard } from '../game/core/minesweeper';
+import { useToggle } from '@/hooks/useToggle';
+import { capitalize } from '@/lib/utils';
+
+import { Difficulty } from '../../types';
+import { IGameContext } from '../../context/types';
+import { HEIGHT, MINES, WIDTH } from '../../constants';
 
 export const ConfigForm = ({
   configuration,

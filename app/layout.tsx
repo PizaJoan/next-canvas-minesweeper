@@ -1,11 +1,12 @@
 import type { Metadata } from 'next';
 import type { ReactNode } from 'react';
 
-import './globals.css';
+import { cookies } from 'next/headers';
 
 import { Navbar } from '@/components/navbar';
 import { USERNAME } from '@/constants/cookies-keys';
-import { cookies } from 'next/headers';
+
+import './globals.css';
 
 export const metadata: Metadata = {
   title: "jpizaf's Minesweeper App",

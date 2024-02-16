@@ -1,4 +1,5 @@
 import { createContext } from 'react';
+
 import { IGameContext } from './types';
 import { Difficulty } from '../types';
 
