@@ -1,6 +1,8 @@
-import { Button } from '@/components/button';
-import { useMineSweeper } from './hooks/useMinesweeper';
 import { twMerge } from 'tailwind-merge';
+
+import { Button } from '@/components/button';
+
+import { useMineSweeper } from './hooks/useMinesweeper';
 
 export const Game = () => {
   const { canvasRef, width, height, remainingFlags, lost, won, reset } =
@@ -23,7 +25,12 @@ export const Game = () => {
         </div>
       )}
       <div id="game">
-        <canvas ref={canvasRef} width={width} height={height} />
+        <canvas
+          className="rounded border border-gray-400 transition-shadow delay-0 duration-500 ease-linear hover:shadow-lg hover:shadow-gray-400/50"
+          ref={canvasRef}
+          width={width}
+          height={height}
+        />
       </div>
     </>
   );
