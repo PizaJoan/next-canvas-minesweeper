@@ -33,6 +33,7 @@ jobs:
           name: frontend-dist
           path: |
             .next/standalone
+            .next/static
             Dockerfile
 
   deploy:
