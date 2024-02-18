@@ -1,10 +1,10 @@
 FROM node:alpine
 
-COPY .next/standalone /frontend/
-COPY .next/static /frontend/.next/static
-
 EXPOSE 3000
 
 WORKDIR /frontend
+
+COPY ./.next/standalone ./
+COPY ./.next/static .next/static
 
 CMD ["node", "server.js"]
