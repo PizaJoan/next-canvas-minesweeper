@@ -44,14 +44,11 @@ jobs:
         with:
           name: frontend-dist
 
-      - name: ls
-        run: ls -al
-
       - name: Create out
         run: mkdir out
 
       - name: Move to out
-        run: mv $(ls -a | grep -v out) out
+        run: mv $(ls -A | grep -v out) out
 
       - name: Zip dist
         run: tar -czvf app.tar.gz ./out
