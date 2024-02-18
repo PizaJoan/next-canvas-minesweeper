@@ -45,7 +45,7 @@ jobs:
           name: frontend-dist
 
       - name: ls
-        run: ls -al
+        run: ls
 
       - name: Create out
         run: mkdir out
