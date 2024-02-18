@@ -1,6 +1,7 @@
 FROM node:alpine
 
 COPY .next/standalone /frontend/
+COPY .next/static /frontend/.next/static
 
 EXPOSE 3000
 
