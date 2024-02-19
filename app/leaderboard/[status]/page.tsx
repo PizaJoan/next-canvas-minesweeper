@@ -29,7 +29,7 @@ export default async function Leaderboard({
     <>
       <article className="flex w-full justify-center">
         {games.length > 0 ? (
-          <ul className="w-1/2 space-y-5">
+          <ul className="w-full space-y-5 md:w-1/2">
             {games.map((game, index) => (
               <li
                 className="flex justify-between rounded-xl border border-gray-500 bg-gray-900 px-5 py-3 text-center hover:border-gray-300 hover:bg-gray-700"

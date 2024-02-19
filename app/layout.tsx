@@ -18,9 +18,11 @@ export default function RootLayout({ children }: { children: ReactNode }) {
 
   return (
     <html lang="es">
-      <body>
+      <body className="bg-slate-950 text-slate-50">
         <Navbar username={username} />
-        <main className="min-h-screen px-24 py-16">{children}</main>
+        <main className="min-h-screen px-6 py-10 md:px-24 md:py-16">
+          {children}
+        </main>
       </body>
     </html>
   );

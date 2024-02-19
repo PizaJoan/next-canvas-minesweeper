@@ -30,7 +30,7 @@ export const GoogleLogin = () => {
   }, [router]);
 
   return (
-    <div>
+    <div className="max-w-xs">
       <div ref={scriptContainerRef} />
       <div
         id="g_id_onload"

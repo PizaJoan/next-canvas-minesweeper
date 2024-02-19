@@ -12,7 +12,7 @@ export const User = ({ username }: { username: string }) => {
   };
 
   return (
-    <div className="flex flex-row items-center gap-5">
+    <div className="flex flex-row items-center justify-center gap-5 md:justify-start">
       <p>
         Hello,{' '}
         <span className="bg-red-40 font-semibold italic">{username}</span>

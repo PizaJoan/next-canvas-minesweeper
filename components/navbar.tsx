@@ -10,8 +10,8 @@ export const Navbar = ({ username }: { username?: string }) => {
   const path = usePathname();
 
   return (
-    <header className="justify-content-center grid grid-cols-3 gap-5 pt-10">
-      <div className="col-start-2 flex flex-row items-center justify-center gap-5">
+    <header className="justify-content-center flex flex-col gap-5 pt-10 md:grid md:grid-cols-3">
+      <div className="flex flex-row items-center justify-center gap-5 md:col-start-2">
         <Link href="/" className={path === '/' ? 'font-semibold' : ''}>
           Game
         </Link>
