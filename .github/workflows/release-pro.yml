@@ -10,32 +10,16 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - uses: pnpm/action-setup@v3
-        name: Setup pnpm
-        with:
-          version: 8
-
-      - name: Setup node
-        uses: actions/setup-node@v3
-        with:
-          node-version: 20.11.0
-          cache: 'pnpm'
-
-      - name: Install deppendencies
-        run: pnpm install
-
-      - name: Build
-        run: pnpm run build
+      - run: mkdir out
+      - run: mv $(ls -A | grep -v out) out
+      - run: tar -czf app.tar.gz ./out
 
       # I may need to add the dockerfile so it can build the image after
       - name: Push artifact
         uses: actions/upload-artifact@v4
         with:
           name: frontend-dist
-          path: |
-            .next/standalone
-            .next/static
-            Dockerfile
+          path: app.tar.gz
 
   deploy:
     needs: build
@@ -45,18 +29,6 @@ jobs:
         uses: actions/download-artifact@v4
         with:
           name: frontend-dist
-
-      - name: Create out
-        run: mkdir out
-
-      - name: Move to out
-        run: mv $(ls -A | grep -v out) out
-
-      - name: Zip dist
-        run: tar -czf app.tar.gz ./out
-
-      - name: Remove out
-        run: rm -rf out
 
       - name: SCP artifact
         uses: appleboy/scp-action@v0.1.7
