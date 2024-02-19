@@ -7,3 +7,4 @@ README.md
 .github
 .eslintrc.json
 .pretierrc
+*.tar.gz
