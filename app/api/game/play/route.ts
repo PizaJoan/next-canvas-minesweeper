@@ -9,17 +9,20 @@ export async function POST(request: Request) {
 
   const body = await request.json();
 
-  const status = await fetch(`${process.env.API_URL}/game/play`, {
-    method: 'POST',
-    headers: {
-      'content-type': 'application/json',
+  const status = await fetch(
+    `${process.env.API_URL}/game/play${body.bulk ? '/bulk' : ''}`,
+    {
+      method: 'POST',
+      headers: {
+        'content-type': 'application/json',
+      },
+      body: JSON.stringify({
+        ...body,
+        userId: user?.value,
+        gameId: game?.value,
+      }),
     },
-    body: JSON.stringify({
-      ...body,
-      userId: user?.value,
-      gameId: game?.value,
-    }),
-  });
+  );
 
   const res = await status.json();
 

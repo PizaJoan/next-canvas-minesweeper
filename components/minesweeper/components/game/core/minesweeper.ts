@@ -4,7 +4,7 @@ import { BOMB } from '@/components/minesweeper/constants';
 
 import { Cell, CellColor } from '../../../types';
 import { checkBombProximity, getRowAndCol } from '../lib/helpers';
-import { playGame } from '../lib/requests';
+import { playGame, playGameBulk } from '../lib/requests';
 
 const getCellColor = (num: number): string => {
   switch (num) {
@@ -195,6 +195,12 @@ export const handleOnClickCurrying =
             }
             cell.revealed = true;
           });
+
+          playGameBulk(
+            revealPath
+              .filter(([row, col]) => row !== clickRow || col !== clickCol)
+              .map(([row, col]) => ({ row, col })),
+          );
           updateVisited(...revealPath.map(([row, col]) => board[row][col]));
 
           // DRAW NUM

@@ -14,3 +14,6 @@ export const initGame = (body: Partial<IGameContext>) =>
 
 export const playGame = (body: { row: number; col: number }) =>
   POST('/api/game/play', body);
+
+export const playGameBulk = (body: { row: number; col: number }[]) =>
+  POST('/api/game/play', { cells: body, bulk: true });
