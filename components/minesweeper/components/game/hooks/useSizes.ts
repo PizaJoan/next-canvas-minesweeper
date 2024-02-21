@@ -13,14 +13,15 @@ export const useSizes = ({
   difficulty: Difficulty;
 }) => {
   const { isSmallDevice, size } = useIsSmallDevice();
-  console.log(isSmallDevice);
+
   const multiplier = useMemo(
     () => (isSmallDevice ? 1 : CELL_MULTIPLIER[difficulty]),
     [difficulty, isSmallDevice],
   );
 
   const drawCellSize = useMemo(
-    () => (isSmallDevice ? Math.floor(size / cols) : CELL_SIZE * multiplier),
+    () =>
+      isSmallDevice ? Math.floor((size - 10) / cols) : CELL_SIZE * multiplier,
     [multiplier, isSmallDevice, size, cols],
   );
 
