@@ -20,7 +20,7 @@ export const Game = () => {
   } = useMineSweeper();
 
   const { isSmallDevice } = useIsSmallDevice();
-  console.log(isDigMode);
+
   return (
     <>
       <p className="text-3xl font-semibold">Flags: {remainingFlags}</p>
