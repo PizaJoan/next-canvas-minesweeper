@@ -82,11 +82,11 @@ export const ConfigForm = ({
       className="flex flex-row flex-wrap items-end justify-center gap-x-6"
     >
       <div>
-        <label className="mb-2 block font-medium text-gray-900 dark:text-white">
+        <label className="mb-2 block font-medium text-white">
           Select difficulty
         </label>
         <select
-          className="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-gray-900 focus:border-blue-500 focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400 dark:focus:border-blue-500 dark:focus:ring-blue-500"
+          className="block w-full rounded-lg border border-gray-600 bg-gray-700 p-2.5 text-white placeholder-gray-400 focus:border-blue-500 focus:ring-blue-500"
           onChange={handleChangeMode}
           defaultValue={difficulty}
         >
@@ -106,12 +106,12 @@ export const ConfigForm = ({
       {isCustomMode && !isSmallDevice && (
         <>
           <div>
-            <label className="mb-2 block font-medium text-gray-900 dark:text-white">
+            <label className="mb-2 block font-medium text-white">
               Number of columns
             </label>
             <input
               ref={colsRef}
-              className="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-gray-900 focus:border-blue-500 focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400 dark:focus:border-blue-500 dark:focus:ring-blue-500"
+              className="block w-full rounded-lg border  border-gray-600  bg-gray-700 p-2.5 text-white placeholder-gray-400 focus:border-blue-500 focus:ring-blue-500"
               defaultValue={WIDTH[Difficulty.custom]}
               type="number"
               min={8}
@@ -119,12 +119,12 @@ export const ConfigForm = ({
             />
           </div>
           <div>
-            <label className="mb-2 block font-medium text-gray-900 dark:text-white">
+            <label className="mb-2 block font-medium text-white">
               Number of rows
             </label>
             <input
               ref={rowsRef}
-              className="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-gray-900 focus:border-blue-500 focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400 dark:focus:border-blue-500 dark:focus:ring-blue-500"
+              className="block w-full rounded-lg border  border-gray-600  bg-gray-700 p-2.5 text-white placeholder-gray-400 focus:border-blue-500 focus:ring-blue-500"
               defaultValue={HEIGHT[Difficulty.custom]}
               type="number"
               min={8}
