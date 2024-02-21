@@ -8,6 +8,7 @@ import {
 } from 'react';
 
 import { GameContext } from '../../../context/gameContext';
+import { useSizes } from './useSizes';
 
 import {
   initialize,
@@ -26,6 +27,12 @@ export const useMineSweeper = () => {
   const { cols, rows, mines, difficulty, board, reset } =
     useContext(GameContext);
 
+  const { canvasHeight, canvasWidth, drawCellSize, multiplier } = useSizes({
+    rows,
+    cols,
+    difficulty,
+  });
+
   const boardRef = useRef<Cell[][]>();
   const prevHoveredRef = useRef<[number, number]>([-1, -1]);
   const canvasRef = useRef<HTMLCanvasElement>(null);
@@ -40,18 +47,6 @@ export const useMineSweeper = () => {
   const visitedCellsToWin = useMemo(
     () => cols * rows - mines,
     [cols, rows, mines],
-  );
-
-  const multiplier = useMemo(() => CELL_MULTIPLIER[difficulty], [difficulty]);
-  const drawCellSize = useMemo(() => CELL_SIZE * multiplier, [multiplier]);
-
-  const canvasWidth = useMemo(
-    () => Math.round(CELL_SIZE * cols * multiplier),
-    [cols, multiplier],
-  );
-  const canvasHeight = useMemo(
-    () => Math.round(CELL_SIZE * rows * multiplier),
-    [rows, multiplier],
   );
 
   const handleUpdateVisited = useCallback((...visitedCels: Cell[]) => {

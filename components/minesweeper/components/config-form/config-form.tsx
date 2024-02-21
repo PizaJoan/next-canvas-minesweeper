@@ -7,13 +7,16 @@ import {
   useState,
 } from 'react';
 
-import { Button } from '@/components/button';
-import { useToggle } from '@/hooks/useToggle';
 import { capitalize } from '@/lib/utils';
+
+import { useToggle } from '@/hooks/useToggle';
+import { useIsSmallDevice } from '@/components/minesweeper/components/game/hooks/useIsSmallDevice';
+
+import { Button } from '@/components/button';
 
 import { Difficulty } from '../../types';
 import { IGameContext } from '../../context/types';
-import { HEIGHT, MINES, WIDTH } from '../../constants';
+import { HEIGHT, WIDTH } from '../../constants';
 
 export const ConfigForm = ({
   configuration,
@@ -26,6 +29,7 @@ export const ConfigForm = ({
   isGameEnabled: boolean;
   toggleGameEnabled: () => void;
 }) => {
+  const { isSmallDevice } = useIsSmallDevice();
   const [difficulty, setDifficulty] = useState<Difficulty>(
     configuration.difficulty,
   );
@@ -86,14 +90,20 @@ export const ConfigForm = ({
           onChange={handleChangeMode}
           defaultValue={difficulty}
         >
-          {Object.values(Difficulty).map((difficulty) => (
-            <option key={difficulty} value={difficulty}>
-              {capitalize(difficulty)}
-            </option>
-          ))}
+          {Object.values(Difficulty)
+            .filter((difficulty) =>
+              isSmallDevice
+                ? ![Difficulty.custom, Difficulty.hard].includes(difficulty)
+                : true,
+            )
+            .map((difficulty) => (
+              <option key={difficulty} value={difficulty}>
+                {capitalize(difficulty)}
+              </option>
+            ))}
         </select>
       </div>
-      {isCustomMode && (
+      {isCustomMode && !isSmallDevice && (
         <>
           <div>
             <label className="mb-2 block font-medium text-gray-900 dark:text-white">
@@ -123,9 +133,9 @@ export const ConfigForm = ({
           </div>
         </>
       )}
-      {(!isGameEnabled || isCustomMode) && (
+      {(!isGameEnabled || isCustomMode || isSmallDevice) && (
         <Button type="submit" customClassNames="m-0">
-          Start!
+          {!isGameEnabled ? 'Start!' : 'Reload'}
         </Button>
       )}
     </form>
