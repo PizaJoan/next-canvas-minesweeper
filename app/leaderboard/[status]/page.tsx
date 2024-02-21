@@ -37,7 +37,7 @@ export default async function Leaderboard({
               >
                 <span className="flex flex-col justify-between gap-2 text-start">
                   <span>
-                    {index + 1 + (!!page && page > 1 ? page * 20 : 0)}
+                    {index + 1 + (!!page && page > 1 ? (page - 1) * 20 : 0)}
                     {'. '}
                     {game.user.name ?? 'Unknown'}
                   </span>
