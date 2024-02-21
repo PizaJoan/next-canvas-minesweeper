@@ -18,7 +18,9 @@ import {
 } from '../core/minesweeper';
 
 import { Cell } from '../../../types';
-import { BOMB, CELL_MULTIPLIER, CELL_SIZE } from '../../../constants';
+import { BOMB } from '../../../constants';
+
+const emptyArray: Cell[] = [];
 
 export const useMineSweeper = () => {
   const { cols, rows, mines, difficulty, board, reset } =
@@ -29,7 +31,7 @@ export const useMineSweeper = () => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const ctx = useRef<CanvasRenderingContext2D | null>();
 
-  const [visited, setVisited] = useState<Cell[]>([]);
+  const [visited, setVisited] = useState<Cell[]>(emptyArray);
   const [won, setWon] = useState(false);
   const [lost, setLost] = useState(false);
   const [flags, setFlags] = useState(mines);
@@ -80,10 +82,6 @@ export const useMineSweeper = () => {
 
   useEffect(() => {
     if (canvasRef.current && !(won || lost)) {
-      // Reset original state
-      setFlags(mines);
-      setVisited([]);
-
       const canvas = canvasRef.current;
 
       ctx.current = canvas.getContext('2d');
@@ -162,7 +160,9 @@ export const useMineSweeper = () => {
   // Force reset game when updates the context/changes difficulty
   useEffect(() => {
     handleReset();
-  }, [board, handleReset]);
+    setFlags(mines);
+    setVisited(emptyArray);
+  }, [board, mines, handleReset]);
 
   return {
     canvasRef,
