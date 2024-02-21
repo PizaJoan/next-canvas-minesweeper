@@ -7,6 +7,8 @@ import {
   useState,
 } from 'react';
 
+import type { Cell } from '../../../types';
+
 import { GameContext } from '../../../context/gameContext';
 import { useSizes } from './useSizes';
 
@@ -18,8 +20,8 @@ import {
   handleOnMouseOutCurrying,
 } from '../core/minesweeper';
 
-import { Cell } from '../../../types';
 import { BOMB } from '../../../constants';
+import { useIsSmallDevice } from './useIsSmallDevice';
 
 const emptyArray: Cell[] = [];
 
@@ -44,12 +46,21 @@ export const useMineSweeper = () => {
   const [flags, setFlags] = useState(mines);
   const flagsRef = useRef(flags);
 
+  // Mobile Stuff
+  const [isDigMode, setIsDigMode] = useState(true);
+  const isDigModeRef = useRef(isDigMode);
+
   const visitedCellsToWin = useMemo(
     () => cols * rows - mines,
     [cols, rows, mines],
   );
 
   const handleUpdateVisited = useCallback((...visitedCels: Cell[]) => {
+    const flagsCleared = visitedCels.filter((cell) => cell.isFlag);
+
+    if (flagsCleared.length >= 1)
+      setFlags((prevFlags) => prevFlags + flagsCleared.length);
+
     setVisited((prevVisited) => {
       const updatedVisited = [...prevVisited];
       updatedVisited?.push(...visitedCels);
@@ -58,7 +69,7 @@ export const useMineSweeper = () => {
     });
   }, []);
 
-  const useFlag = useCallback((used: boolean = false) => {
+  const handleUseFlag = useCallback((used: boolean = false) => {
     setFlags((prev) => (prev > 0 ? (used ? prev + 1 : prev - 1) : prev));
   }, []);
 
@@ -74,6 +85,9 @@ export const useMineSweeper = () => {
     handleReset();
     reset?.({ rows, cols, difficulty });
   }, [handleReset, reset, rows, cols, difficulty]);
+
+  const setDigMode = useCallback(() => setIsDigMode(true), []);
+  const setFlagMode = useCallback(() => setIsDigMode(false), []);
 
   useEffect(() => {
     if (canvasRef.current && !(won || lost)) {
@@ -113,18 +127,23 @@ export const useMineSweeper = () => {
         drawCellSize,
         flagsRef,
         multiplier,
-        useFlag,
+        handleUseFlag,
       );
+
+      const finalOnClickEvent = function (ev: MouseEvent) {
+        if (isDigModeRef.current) handleClick(ev);
+        else handleOnContextMenu(ev);
+      };
 
       canvas.addEventListener('mousemove', handleOnHover);
       canvas.addEventListener('mouseout', handleOnMouseOut);
-      canvas.addEventListener('click', handleClick);
+      canvas.addEventListener('click', finalOnClickEvent);
       canvas.addEventListener('contextmenu', handleOnContextMenu);
 
       return () => {
         canvas.removeEventListener('mousemove', handleOnHover);
         canvas.removeEventListener('mouseout', handleOnMouseOut);
-        canvas.removeEventListener('click', handleClick);
+        canvas.removeEventListener('click', finalOnClickEvent);
         canvas.removeEventListener('contextmenu', handleOnContextMenu);
       };
     }
@@ -137,13 +156,17 @@ export const useMineSweeper = () => {
     cols,
     rows,
     board,
-    useFlag,
+    handleUseFlag,
     handleUpdateVisited,
   ]);
 
   useEffect(() => {
     flagsRef.current = flags;
   }, [flags]);
+
+  useEffect(() => {
+    isDigModeRef.current = isDigMode;
+  }, [isDigMode]);
 
   useEffect(() => {
     const foundBomb = visited.find((cell) => cell.num === BOMB);
@@ -167,5 +190,8 @@ export const useMineSweeper = () => {
     won,
     lost,
     reset: handleClickReset,
+    isDigMode,
+    setDigMode,
+    setFlagMode,
   };
 };

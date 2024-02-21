@@ -2,9 +2,10 @@ import { MutableRefObject, RefObject } from 'react';
 
 import { BOMB } from '@/components/minesweeper/constants';
 
-import { Cell, CellColor } from '../../../types';
+import { Cell, CellColor, Difficulty } from '../../../types';
 import { checkBombProximity, getRowAndCol } from '../lib/helpers';
 import { playGame, playGameBulk } from '../lib/requests';
+import { MIN_DESKTOP_WIDTH } from '@/constants/window-size';
 
 const getCellColor = (num: number): string => {
   switch (num) {
@@ -217,16 +218,20 @@ export const handleOnClickCurrying =
     }
   };
 
-export const handleOnContextMenuCurrying =
-  (
-    board: Cell[][],
-    ctx: CanvasRenderingContext2D | null,
-    cellSize: number,
-    flags: RefObject<number> | null,
-    multiplier: number,
-    useFlag: (used?: boolean) => void,
-  ) =>
-  (ev: MouseEvent) => {
+export const handleOnContextMenuCurrying = (
+  board: Cell[][],
+  ctx: CanvasRenderingContext2D | null,
+  cellSize: number,
+  flags: RefObject<number> | null,
+  multiplier: number,
+  useFlag: (used?: boolean) => void,
+) => {
+  // Since I have to use a state for the isSmallDevice, to avoid rerendering and passing the state better do it in place
+  // Just for the flag size
+  multiplier =
+    window.innerWidth < MIN_DESKTOP_WIDTH ? multiplier * 0.8 : multiplier;
+
+  return (ev: MouseEvent) => {
     ev.preventDefault();
 
     if (
@@ -262,8 +267,8 @@ export const handleOnContextMenuCurrying =
     useFlag();
 
     const [row, col] = [
-      clickRow * cellSize + cellSize / 15,
-      clickCol * cellSize + cellSize / 8,
+      clickRow * cellSize + cellSize / 8,
+      clickCol * cellSize + cellSize / 5,
     ];
 
     ctx?.beginPath();
@@ -284,3 +289,4 @@ export const handleOnContextMenuCurrying =
 
     ctx?.fill();
   };
+};
