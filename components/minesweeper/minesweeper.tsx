@@ -7,7 +7,9 @@ import { GameContext, initialGameContext } from './context/gameContext';
 
 import { Game } from './components/game/game';
 import { ConfigForm } from './components/config-form/config-form';
+
 import { IGameContext } from './context/types';
+
 import { mapBoard } from './components/game/core/minesweeper';
 import { initGame } from './components/game/lib/requests';
 

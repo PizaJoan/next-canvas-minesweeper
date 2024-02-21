@@ -7,7 +7,6 @@ import { useMineSweeper } from './hooks/useMinesweeper';
 export const Game = () => {
   const { canvasRef, width, height, remainingFlags, lost, won, reset } =
     useMineSweeper();
-
   return (
     <>
       <p className="text-3xl font-semibold">Flags: {remainingFlags}</p>
@@ -26,7 +25,7 @@ export const Game = () => {
       )}
       <div id="game">
         <canvas
-          className="rounded border border-gray-400 transition-shadow delay-0 duration-500 ease-linear hover:shadow-lg hover:shadow-gray-400/50"
+          className="md:rounded md:border md:border-gray-400 md:transition-shadow md:delay-0 md:duration-300 md:ease-linear md:hover:shadow-lg md:hover:shadow-gray-400/50"
           ref={canvasRef}
           width={width}
           height={height}
