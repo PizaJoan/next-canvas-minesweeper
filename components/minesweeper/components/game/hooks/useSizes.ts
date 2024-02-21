@@ -21,7 +21,7 @@ export const useSizes = ({
 
   const drawCellSize = useMemo(
     () =>
-      isSmallDevice ? Math.floor((size - 10) / cols) : CELL_SIZE * multiplier,
+      isSmallDevice ? Math.floor((size - 20) / cols) : CELL_SIZE * multiplier,
     [multiplier, isSmallDevice, size, cols],
   );
 

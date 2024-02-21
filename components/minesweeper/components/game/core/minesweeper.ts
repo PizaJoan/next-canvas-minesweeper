@@ -228,8 +228,6 @@ export const handleOnContextMenuCurrying = (
 ) => {
   // Since I have to use a state for the isSmallDevice, to avoid rerendering and passing the state better do it in place
   // Just for the flag size
-  multiplier =
-    window.innerWidth < MIN_DESKTOP_WIDTH ? multiplier * 0.8 : multiplier;
 
   return (ev: MouseEvent) => {
     ev.preventDefault();
@@ -274,18 +272,61 @@ export const handleOnContextMenuCurrying = (
     ctx?.beginPath();
     ctx!.fillStyle = getCellColor(0);
 
-    ctx?.moveTo(col, row + 12 * multiplier);
+    let { actualX, actualY } = {
+      actualX: col - cellSize * 0.05,
+      actualY: row + cellSize * 0.3,
+    };
+    ctx?.moveTo(actualX, actualY);
 
-    ctx?.lineTo(col + 12 * multiplier, row + 0);
-    ctx?.lineTo(col + 15 * multiplier, row + 0);
-    ctx?.lineTo(col + 15 * multiplier, row + 25 * multiplier);
-    ctx?.lineTo(col + 25 * multiplier, row + 25 * multiplier);
-    ctx?.lineTo(col + 25 * multiplier, row + 27 * multiplier);
-    ctx?.lineTo(col + 0, row + 27 * multiplier);
-    ctx?.lineTo(col + 0, row + 25 * multiplier);
-    ctx?.lineTo(col + 12 * multiplier, row + 25 * multiplier);
-    ctx?.lineTo(col + 12 * multiplier, row + 20 * multiplier);
-    ctx?.lineTo(col + 0, row + 12 * multiplier);
+    // First line: middle to top crosed
+    actualX += cellSize * 0.4;
+    actualY -= cellSize * 0.3;
+    ctx?.lineTo(actualX, actualY);
+
+    let i = 1;
+
+    while (i < 10) {
+      switch (i) {
+        // Short line 'pole'
+        case 1:
+          actualX += cellSize * 0.05;
+          break;
+        // Pole
+        case 2:
+          actualY += cellSize * 0.7;
+          break;
+        // Base right
+        case 3:
+          actualX += cellSize * 0.25;
+          break;
+        // Base height
+        case 4:
+          actualY += cellSize * 0.08;
+          break;
+        // To base left
+        case 5:
+          actualX -= cellSize * 0.6;
+          break;
+        // Base left height
+        case 6:
+          actualY -= cellSize * 0.08;
+          break;
+        // Pole left
+        case 7:
+          actualX += cellSize * 0.25;
+          break;
+        case 8:
+          actualY -= cellSize * 0.2;
+          break;
+        // Right side of flag
+        case 9:
+          actualX -= cellSize * 0.4;
+          actualY -= cellSize * 0.2;
+          break;
+      }
+      ctx?.lineTo(actualX, actualY);
+      i++;
+    }
 
     ctx?.fill();
   };

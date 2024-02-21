@@ -37,7 +37,7 @@ export default async function Leaderboard({
               >
                 <span className="flex flex-col justify-between gap-2 text-start">
                   <span>
-                    {index + 1 + (!!page && page > 1 ? (page - 1) * 20 : 0)}
+                    {index + 1 + (!!page && page > 1 ? (page - 1) * 8 : 0)}
                     {'. '}
                     {game.user.name ?? 'Unknown'}
                   </span>
@@ -67,7 +67,7 @@ export default async function Leaderboard({
           </span>
         )}
       </article>
-      {(games.length === 20 || !!page) && (
+      {(games.length === 8 || !!page) && (
         <footer className="flex flex-row  gap-5 self-center">
           {page > 1 && (
             <Link
@@ -82,7 +82,7 @@ export default async function Leaderboard({
               <Button>Prev</Button>
             </Link>
           )}
-          {games.length === 20 && (
+          {games.length === 8 && (
             <Link
               href={{
                 pathname: `/leaderboard/${status}`,
