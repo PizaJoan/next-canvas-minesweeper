@@ -41,7 +41,7 @@ export default async function Leaderboard({
                     {'. '}
                     {game.user.name ?? 'Unknown'}
                   </span>
-                  <div className="flex justify-around gap-5">
+                  <div className="flex justify-start gap-2">
                     <span
                       className={twMerge(
                         'flex self-center text-sm font-semibold capitalize',

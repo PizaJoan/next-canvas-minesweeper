@@ -1,5 +1,7 @@
 FROM node:alpine as builder
 
+ARG NEXT_PUBLIC_GOAUTH
+
 # Add container deppendencies
 RUN apk add --no-cache libc6-compat
 RUN corepack enable
@@ -11,6 +13,9 @@ WORKDIR /frontend
 COPY . .
 
 RUN pnpm install
+
+ENV NEXT_PUBLIC_GOAUTH=${NEXT_PUBLIC_GOAUTH}
+
 RUN pnpm run build
 
 FROM node:alpine as service

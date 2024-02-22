@@ -218,18 +218,16 @@ export const handleOnClickCurrying =
     }
   };
 
-export const handleOnContextMenuCurrying = (
-  board: Cell[][],
-  ctx: CanvasRenderingContext2D | null,
-  cellSize: number,
-  flags: RefObject<number> | null,
-  multiplier: number,
-  useFlag: (used?: boolean) => void,
-) => {
-  // Since I have to use a state for the isSmallDevice, to avoid rerendering and passing the state better do it in place
-  // Just for the flag size
-
-  return (ev: MouseEvent) => {
+export const handleOnContextMenuCurrying =
+  (
+    board: Cell[][],
+    ctx: CanvasRenderingContext2D | null,
+    cellSize: number,
+    flags: RefObject<number> | null,
+    multiplier: number,
+    useFlag: (used?: boolean) => void,
+  ) =>
+  (ev: MouseEvent) => {
     ev.preventDefault();
 
     if (
@@ -330,4 +328,3 @@ export const handleOnContextMenuCurrying = (
 
     ctx?.fill();
   };
-};
