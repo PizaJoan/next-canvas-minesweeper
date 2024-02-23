@@ -23,12 +23,12 @@ export const Game = () => {
 
   return (
     <>
-      <p className="text-3xl font-semibold">Flags: {remainingFlags}</p>
+      <p className="text-xl font-semibold">Flags: {remainingFlags}</p>
       {(won || lost) && (
         <div className="flex flex-col items-center gap-6">
           <p
             className={twMerge(
-              'text-5xl font-bold',
+              'text-3xl font-bold md:text-5xl',
               won ? 'text-green-400' : 'text-red-400',
             )}
           >
@@ -39,7 +39,7 @@ export const Game = () => {
       )}
       <div id="game">
         {isSmallDevice && (
-          <div className="flex items-center justify-center gap-5 p-6 ">
+          <div className="flex items-center justify-center gap-5 p-5">
             <span className="text-lg font-semibold">Mode:</span>
             <Button
               customClassNames={twMerge(
